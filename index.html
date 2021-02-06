@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			
+			*{
+				margin: 0;
+				padding: 0;
+				background-image: url(img/4.png);
+				position: relative;
+			}
+			#click1{
+				position: absolute;
+				left: 610px;
+				top: 500px;
+				height: 10px;
+				border-radius: 25px;
+				background: rgb(230,180,117);
+			}	
+			#click1 a{
+				text-decoration: none;
+				font-size: 16px;
+				background: rgb(230,180,117);
+				line-height: 5px;
+				border-radius: 15px;
+			}
+			#click2{
+				position: absolute;
+				left: 750px;
+				top: 120px;
+				height: 40px;
+				border-radius: 25px;
+				background: rgb(245,146,55);
+			}	
+			#click2 a{
+				text-decoration: none;
+				font-size: 14px;
+				background: rgb(245,146,55);
+				line-height: 40px;
+				border-radius: 15px;
+			}
+			canvas{
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<audio autoplay="autoplay" loop="loop" preload="auto"
+		    	src="China-X.mp3"></audio>
+				
+		<canvas id="snowfall"></canvas>				
+		<div class="container">		
+			
+			<div id="click1">
+				<a href="" style="color: chocolate;">look the moon</a>
+			</div>
+			<div id="click2">
+				<a href="New.html">click here</a>
+			</div>
+		</div>	
+	</body>
+	<script type="text/javascript">
+		var snow = {
+			x: 0,
+			y: 0,
+			alpha: 0.5,
+			radius: 3,
+		
+			/**
+			 * Velocity for the particle.
+			 */
+			velocity: {
+				x: 0,
+				y: 5
+			},
+		
+			/**
+			 * Draws the particle onto the canvas in context.
+			 *
+			 * @param	c	 The canvas context to draw onto
+			 */
+			draw:function(c){
+				c.fillStyle = 'rgba(255,255,255,'+this.alpha+')';
+				c.beginPath();
+				c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+				c.fill();
+			},
+		
+			/**
+			 * Updates the particle.
+			 */
+			update:function(){
+				this.x += this.velocity.x
+				this.y += this.velocity.y;
+		
+		
+			},
+		
+			/**
+			 * Randomizes the settings for the particle
+			 *
+			 * @param	zone	The blastZone
+			 */
+			randomize:function(zone){
+				// Get a random point inside the blastzone and set the x/y
+				var s = this.getLocation(zone);
+				this.x = s.x;
+				this.y = s.y;
+		
+				this.alpha = this.randomRange(0.3, 1);
+				this.radius = this.randomRange(1, 5);
+		
+				this.velocity = {
+					x: this.randomRange(-0.35, 0.35),
+					y: this.randomRange(0.75, 1.5)
+				}
+			},
+		
+			/**
+			 * Adds a random drift type motion to the particle.
+			 * Taken from the Flint particle system....
+			 */
+			action:function(){
+				this.velocity.x += (Math.random() - 0.5) * 0.1;
+			},
+		
+			/**
+			 * Take a low and high number and gets a random number between them.
+			 *
+			 * @param	low		The low number
+			 * @param	high	The high number
+			 * @return	Number
+			 */
+			randomRange:function(low, high){
+				return (Math.random() * (high - low)) + low;
+			},
+		
+			/**
+			 * Gets a random starting point for the particle.
+			 * Taken from the Flint particle system in AS3
+			 *
+			 * @param	zone	The zone to get a location from
+			 * @return	Object
+			 */
+			getLocation:function(z){
+				var p = {};
+				p.x = z.x + Math.random() * z.width;
+				p.y = z.y + Math.random() * z.height;
+				return p;
+			}
+		};
+	</script>
+</html>
